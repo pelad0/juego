@@ -36,7 +36,7 @@
             this.pnlInicio = new System.Windows.Forms.Panel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pnlJugar = new System.Windows.Forms.Panel();
-            this.label2 = new System.Windows.Forms.Label();
+            this.lblTituloTpo = new System.Windows.Forms.Label();
             this.pbSonido = new System.Windows.Forms.PictureBox();
             this.pbReferencias = new System.Windows.Forms.PictureBox();
             this.pbMusica = new System.Windows.Forms.PictureBox();
@@ -114,13 +114,13 @@
             this.btnNuevo.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent;
             this.btnNuevo.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent;
             this.btnNuevo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnNuevo.Font = new System.Drawing.Font("Cooper Std Black", 14.25F, ((System.Drawing.FontStyle)(((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic) 
+            this.btnNuevo.Font = new System.Drawing.Font("Consolas", 12F, ((System.Drawing.FontStyle)(((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic) 
                 | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnNuevo.Location = new System.Drawing.Point(166, 0);
+            this.btnNuevo.Location = new System.Drawing.Point(152, 0);
             this.btnNuevo.Name = "btnNuevo";
-            this.btnNuevo.Size = new System.Drawing.Size(90, 97);
+            this.btnNuevo.Size = new System.Drawing.Size(104, 97);
             this.btnNuevo.TabIndex = 2;
-            this.btnNuevo.Text = "Nuevo Juego";
+            this.btnNuevo.Text = "Finalizar Partida";
             this.btnNuevo.UseVisualStyleBackColor = false;
             this.btnNuevo.Click += new System.EventHandler(this.btnNuevo_Click);
             // 
@@ -141,7 +141,7 @@
             // 
             this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.pictureBox1.Image = global::juego1._0.Properties.Resources.Agnes_Happy_icon;
-            this.pictureBox1.Location = new System.Drawing.Point(103, 25);
+            this.pictureBox1.Location = new System.Drawing.Point(96, 27);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(50, 50);
             this.pictureBox1.TabIndex = 5;
@@ -151,7 +151,7 @@
             // 
             this.pnlJugar.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.pnlJugar.BackColor = System.Drawing.Color.Gold;
-            this.pnlJugar.Controls.Add(this.label2);
+            this.pnlJugar.Controls.Add(this.lblTituloTpo);
             this.pnlJugar.Controls.Add(this.pbSonido);
             this.pnlJugar.Controls.Add(this.pbReferencias);
             this.pnlJugar.Controls.Add(this.pbMusica);
@@ -164,15 +164,15 @@
             this.pnlJugar.Size = new System.Drawing.Size(260, 490);
             this.pnlJugar.TabIndex = 5;
             // 
-            // label2
+            // lblTituloTpo
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Cooper Std Black", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(53, 99);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(155, 19);
-            this.label2.TabIndex = 10;
-            this.label2.Text = "Tiempo Restante";
+            this.lblTituloTpo.AutoSize = true;
+            this.lblTituloTpo.Font = new System.Drawing.Font("Cooper Std Black", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTituloTpo.Location = new System.Drawing.Point(53, 99);
+            this.lblTituloTpo.Name = "lblTituloTpo";
+            this.lblTituloTpo.Size = new System.Drawing.Size(124, 19);
+            this.lblTituloTpo.TabIndex = 10;
+            this.lblTituloTpo.Text = "Tiempo Total";
             // 
             // pbSonido
             // 
@@ -286,13 +286,13 @@
             this.msMedio,
             this.msDificil});
             this.tsmiDif.Name = "tsmiDif";
-            this.tsmiDif.Size = new System.Drawing.Size(152, 22);
+            this.tsmiDif.Size = new System.Drawing.Size(125, 22);
             this.tsmiDif.Text = "Dificultad";
             // 
             // msFacil
             // 
             this.msFacil.Name = "msFacil";
-            this.msFacil.Size = new System.Drawing.Size(152, 22);
+            this.msFacil.Size = new System.Drawing.Size(108, 22);
             this.msFacil.Tag = "1";
             this.msFacil.Text = "-Facil-";
             this.msFacil.Click += new System.EventHandler(this.msDificil_Click);
@@ -300,7 +300,7 @@
             // msMedio
             // 
             this.msMedio.Name = "msMedio";
-            this.msMedio.Size = new System.Drawing.Size(152, 22);
+            this.msMedio.Size = new System.Drawing.Size(108, 22);
             this.msMedio.Tag = "2";
             this.msMedio.Text = "Medio";
             this.msMedio.Click += new System.EventHandler(this.msDificil_Click);
@@ -308,7 +308,7 @@
             // msDificil
             // 
             this.msDificil.Name = "msDificil";
-            this.msDificil.Size = new System.Drawing.Size(152, 22);
+            this.msDificil.Size = new System.Drawing.Size(108, 22);
             this.msDificil.Tag = "3";
             this.msDificil.Text = "Dificil";
             this.msDificil.Click += new System.EventHandler(this.msDificil_Click);
@@ -316,7 +316,7 @@
             // salirToolStripMenuItem
             // 
             this.salirToolStripMenuItem.Name = "salirToolStripMenuItem";
-            this.salirToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.salirToolStripMenuItem.Size = new System.Drawing.Size(125, 22);
             this.salirToolStripMenuItem.Text = "Salir";
             this.salirToolStripMenuItem.Click += new System.EventHandler(this.salirToolStripMenuItem_Click);
             // 
@@ -383,7 +383,7 @@
         private System.Windows.Forms.PictureBox pbReferencias;
         private System.Windows.Forms.PictureBox pbMusica;
         private System.Windows.Forms.PictureBox pbSonido;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label lblTituloTpo;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem juegoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem tsmiDif;

@@ -27,12 +27,12 @@ namespace juego1._0
         List<Point> obstaculos = new List<Point>();
         List<Point> posiblesPlayer = new List<Point>();
         List<Point> playerPoint = new List<Point>();//eliminable
-        List<clsFicha> fichasPlayer = new List<clsFicha>();
         List<Point> posiblesPc = new List<Point>();
         List<Point> pcPoint = new List<Point>();//eliminable
-        List<clsFicha> fichasPc = new List<clsFicha>();
         List<Point> IATarget = new List<Point>();
         List<Point> IAMov = new List<Point>();
+        List<clsFicha> fichasPlayer = new List<clsFicha>();
+        List<clsFicha> fichasPc = new List<clsFicha>();
         Point IAObjetivo = new Point();
         clsFicha player1 = new clsFicha();
         clsFicha player2 = new clsFicha();
@@ -46,16 +46,17 @@ namespace juego1._0
         clsFicha pcPlayer4 = new clsFicha();
         clsFicha pcPlayer5 = new clsFicha();
         clsFicha pcPlayer6 = new clsFicha();
+        clsFicha actual = new clsFicha();
         int unidad;
         int cantObstaculos = 10;
         int tiempo = 0;
         int maxTime = 400;
         int puntaje = 0;
         int movPc = 0;
+        int nivel = 1;
         Pen pCuad;
         Graphics gBase;
         Random r = new Random();
-        clsFicha actual = new clsFicha();
         Point objetivo = new Point();
         Image[] explosion = new Image[15];
         SoundPlayer tema = new SoundPlayer(Resources.remix_banana);
@@ -63,8 +64,6 @@ namespace juego1._0
         bool sonido = true;
         bool musica = true;
         bool entrarClick = true;
-        
-        int nivel = 1;
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -90,6 +89,7 @@ namespace juego1._0
             btnNuevo.Enabled = true;
             btnInicio.Enabled = false;
             tsmiDif.Enabled = false;
+            lblTituloTpo.Text = lblTituloTpo.Text + " " + maxTime.ToString();
             cargarListas();
             crearFichas();
             trReloj.Start();
@@ -171,6 +171,7 @@ namespace juego1._0
             if (entrarClick)
             {
                 entrarClick = false;
+              
 
                 defObjetivo(p);
                 //si estoy clickeando una ficha mia
@@ -178,6 +179,7 @@ namespace juego1._0
                 {
                     dibujarSombras();//cargo "posiblesPlayer"
                     dibujarTarget();//cargo "posiblesPc"
+                    this.Cursor = Cursors.Hand;
                     if (sonido)
                         soundMinion();
                 }
@@ -206,12 +208,11 @@ namespace juego1._0
                             actual.Ubicacion = objetivo;
                             gBase.DrawImage(Resources.blanco, actual.Ubicacion.X, actual.Ubicacion.Y, 48, 48);
                             gBase.DrawImage(actual.ImagenQuieto, actual.Ubicacion.X, actual.Ubicacion.Y, 48, 48);
-                            if (fichasPc.Count > 0)
-                            {
-                                lblTurno.Text = "Turno PC";
-                                ia();
-                                lblTurno.Text = "Turno Jugador";
-                            }
+                            this.Cursor = Cursors.WaitCursor;
+                            lblTurno.Text = "Turno PC";
+                            ia();
+                            lblTurno.Text = "Turno Jugador";
+                            this.Cursor = Cursors.Default;
                         }
                         else
                             //no es nada libero lugares de sombras    
@@ -238,9 +239,19 @@ namespace juego1._0
             lblTpo.Text = tiempo.ToString();
             if (tiempo == maxTime)
             {
-                MessageBox.Show("Se agoto tu tiempo...", "TIME OUT!!!!!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                frmPerdio FRM = new frmPerdio();
+                FRM.ShowDialog();
                 reiniciar();
             }
+            else if(tiempo > maxTime - 20)
+            {
+                lblTpo.ForeColor = Color.Yellow;
+            }
+            else if (tiempo > maxTime - 10)
+            {
+                lblTpo.ForeColor = Color.Red;
+            }
+
         }
 
         private void acercaDeToolStripMenuItem_Click(object sender, EventArgs e)
@@ -907,8 +918,6 @@ namespace juego1._0
 
                 List<auxMov> distancias = new List<auxMov>();
 
-
-
                 foreach (clsFicha fpc in fichasPc)
                 {
                     clsFicha cercana = new clsFicha();
@@ -931,6 +940,7 @@ namespace juego1._0
                     if (a.Distancia < distancia)
                         am = a;
                 }
+                distancias.Clear();
 
                 if (!IAPosSupIzqPc(am.Pc, am.Pl))
                 {
@@ -1463,19 +1473,22 @@ namespace juego1._0
             }
             foreach (Point p in obstaculos)
             {
-                gBase.DrawImage(Resources.blanco, p.X, p.Y, 48, 48);
-                gBase.DrawImage(Resources.yellow_wall, p.X, p.Y, 48, 48);
-
+                if (posiblesPc.Contains(p))
+                {
+                    gBase.DrawImage(Resources.blanco, p.X, p.Y, 48, 48);
+                    gBase.DrawImage(Resources.yellow_wall, p.X, p.Y, 48, 48);
+                }
             }
             foreach (clsFicha f in fichasPc)
             {
-                gBase.DrawImage(Resources.blanco, f.Ubicacion.X, f.Ubicacion.Y, 48, 48);
-                gBase.DrawImage(f.ImagenQuieto, f.Ubicacion.X, f.Ubicacion.Y, 48, 48);
+                if (posiblesPc.Contains(f.Ubicacion))
+                {
+                    gBase.DrawImage(Resources.blanco, f.Ubicacion.X, f.Ubicacion.Y, 48, 48);
+                    gBase.DrawImage(f.ImagenQuieto, f.Ubicacion.X, f.Ubicacion.Y, 48, 48);
+                }
             }
             posiblesPc.Clear();
             posiblesPlayer.Clear();
-
-
         }
 
         /// <summary>
@@ -1506,6 +1519,7 @@ namespace juego1._0
             movPc = 0;
             if(musica)
                 tema.PlayLooping();
+            dibujarCuadricula();
         }
 
         private void siPerdio()
@@ -1514,6 +1528,7 @@ namespace juego1._0
             {
                 frmPerdio FRM = new frmPerdio();
                 FRM.ShowDialog();
+                btnNuevo.Enabled = false;
                 reiniciar();
             }
         }
@@ -1528,6 +1543,7 @@ namespace juego1._0
                     victoria.Play();
                 }
                 frmGano g = new frmGano(puntaje, tiempo);
+                btnNuevo.Enabled = false;
                 g.ShowDialog();
                 reiniciar();
             }
@@ -1550,9 +1566,12 @@ namespace juego1._0
         private void soundInicio()
         {
             var p3 = new System.Windows.Media.MediaPlayer();
+            //p3.ReadLocalValue(Resources.minions_minion_toy); no funciono
+            //p3.SetValue(Resources.minions_minion_toy);falta un parametro
             p3.Open(new System.Uri(@"C:\Users\Sebastian\Desktop\soundJuego\minions-minion-toy.wav"));
             p3.Play();
         }
+
         //SoundPlayer soundMinion = new SoundPlayer(Resources.minions_hellow);
         //SoundPlayer fight = new SoundPlayer(Resources.minions_fight);
         //SoundPlayer sInicio = new SoundPlayer(Resources.minions_minion_toy);
