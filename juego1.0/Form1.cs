@@ -86,10 +86,12 @@ namespace juego1._0
 
         private void Form1_LocationChanged(object sender, EventArgs e)
         {
-            if (cuad) dibujarCuadricula();
-            if (jugando) redibujar();
+            //if (cuad) dibujarCuadricula();
+            //if (jugando) redibujar();
 
         }
+
+
 
         private void btnInicio_Click(object sender, EventArgs e)
         {
@@ -201,6 +203,7 @@ namespace juego1._0
                         disparar();
                         gBase.DrawImage(Resources.blanco, actual.Ubicacion.X, actual.Ubicacion.Y, 48, 48);
                         gBase.DrawImage(actual.ImagenQuieto, actual.Ubicacion.X, actual.Ubicacion.Y, 48, 48);
+                        this.Cursor = Cursors.Default;
                         if (fichasPc.Count > 0)
                         {
                             lblTurno.Text = lblTurno.Text+" PC";
@@ -223,6 +226,7 @@ namespace juego1._0
                             ia();
                             lblTurno.Text = "Turno Jugador";
                             this.Cursor = Cursors.Default;
+
                         }
                         else
                             //no es nada libero lugares de sombras    
@@ -231,6 +235,8 @@ namespace juego1._0
                                 limpiarSomYObj();
                                 gBase.DrawImage(Resources.blanco, actual.Ubicacion.X, actual.Ubicacion.Y, 48, 48);
                                 gBase.DrawImage(actual.ImagenQuieto, actual.Ubicacion.X, actual.Ubicacion.Y, 48, 48);
+                                this.Cursor = Cursors.Default;
+
                             }
                 siGano();
                 siPerdio();
@@ -277,9 +283,8 @@ namespace juego1._0
 
         private void pnlBase_Paint(object sender, PaintEventArgs e)
         {
-            //if(jugando)
-            //    //redibujar();
-            //MessageBox.Show("paint");
+            if (cuad) dibujarCuadricula();
+            if (jugando) redibujar();
         }
 
         private void cargarExplosion()
