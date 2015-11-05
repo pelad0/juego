@@ -216,10 +216,11 @@
             this.lblTurno.AutoSize = true;
             this.lblTurno.Font = new System.Drawing.Font("Cooper Std Black", 15.75F, ((System.Drawing.FontStyle)(((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic) 
                 | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTurno.Location = new System.Drawing.Point(26, 152);
+            this.lblTurno.Location = new System.Drawing.Point(65, 164);
             this.lblTurno.Name = "lblTurno";
-            this.lblTurno.Size = new System.Drawing.Size(0, 26);
+            this.lblTurno.Size = new System.Drawing.Size(78, 26);
             this.lblTurno.TabIndex = 8;
+            this.lblTurno.Text = "Turno";
             this.lblTurno.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblTpo
@@ -339,6 +340,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(854, 631);
             this.Controls.Add(this.pnlJugar);
@@ -352,6 +354,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Load += new System.EventHandler(this.Form1_Load);
             this.Shown += new System.EventHandler(this.Form1_Shown);
+            this.LocationChanged += new System.EventHandler(this.Form1_LocationChanged);
             this.pnlInicio.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.pnlJugar.ResumeLayout(false);

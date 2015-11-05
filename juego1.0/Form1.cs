@@ -64,21 +64,31 @@ namespace juego1._0
         bool sonido = true;
         bool musica = true;
         bool entrarClick = true;
+        bool jugando = false;
+        bool cuad = false;
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            unidad = pnlBase.Width / 12;
             gBase = pnlBase.CreateGraphics();
+            unidad = pnlBase.Width / 12;
             cargarListas();
             cargarExplosion();
             crearToolTip();
-            //tema.PlayLooping();
         }
 
         private void Form1_Shown(object sender, EventArgs e)
         {
             dibujarCuadricula();
             tema.PlayLooping();
+            btnInicio.Enabled = true;
+            cuad = true;
+        }
+
+        private void Form1_LocationChanged(object sender, EventArgs e)
+        {
+            if (cuad) dibujarCuadricula();
+            if (jugando) redibujar();
+
         }
 
         private void btnInicio_Click(object sender, EventArgs e)
@@ -95,6 +105,8 @@ namespace juego1._0
             trReloj.Start();
             lblTurno.Text = "Turno Jugador";
             redibujar();
+            jugando = true;
+
         }
 
         private void btnNuevo_Click(object sender, EventArgs e)
@@ -171,8 +183,6 @@ namespace juego1._0
             if (entrarClick)
             {
                 entrarClick = false;
-              
-
                 defObjetivo(p);
                 //si estoy clickeando una ficha mia
                 if (defActual(objetivo))
@@ -193,7 +203,7 @@ namespace juego1._0
                         gBase.DrawImage(actual.ImagenQuieto, actual.Ubicacion.X, actual.Ubicacion.Y, 48, 48);
                         if (fichasPc.Count > 0)
                         {
-                            lblTurno.Text = "Turno PC";
+                            lblTurno.Text = lblTurno.Text+" PC";
                             ia();
                             lblTurno.Text = "Turno Jugador";
                         }
@@ -1491,6 +1501,32 @@ namespace juego1._0
             posiblesPlayer.Clear();
         }
 
+        private void rectificar()
+        {
+            foreach (Point p in posiciones)
+            {
+                if (!playerPoint.Contains(p) && !pcPoint.Contains(p) && !obstaculos.Contains(p))
+                {
+                    gBase.DrawImage(Resources.blanco, p.X, p.Y, 48, 48);
+                }
+            }
+            foreach (Point p in obstaculos)
+            {
+                    gBase.DrawImage(Resources.blanco, p.X, p.Y, 48, 48);
+                    gBase.DrawImage(Resources.yellow_wall, p.X, p.Y, 48, 48);
+            }
+            foreach (clsFicha f in fichasPc)
+            {
+                    gBase.DrawImage(Resources.blanco, f.Ubicacion.X, f.Ubicacion.Y, 48, 48);
+                    gBase.DrawImage(f.ImagenQuieto, f.Ubicacion.X, f.Ubicacion.Y, 48, 48);
+            }
+            foreach (clsFicha f in fichasPlayer)
+            {
+                gBase.DrawImage(Resources.blanco, f.Ubicacion.X, f.Ubicacion.Y, 48, 48);
+                gBase.DrawImage(f.ImagenQuieto, f.Ubicacion.X, f.Ubicacion.Y, 48, 48);
+            }
+        }
+
         /// <summary>
         /// redibuja el contenido del panel
         /// </summary>
@@ -1499,6 +1535,7 @@ namespace juego1._0
             dibujarCuadricula();
             dibujarFichas();
             dibujarObstaculos();
+            rectificar();
         }
 
         /// <summary>
