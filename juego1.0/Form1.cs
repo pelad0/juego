@@ -63,7 +63,6 @@ namespace juego1._0
         bool sonido = true;
         bool musica = true;
         bool entrarClick = true;
-        bool jugando = false;
         
         int nivel = 1;
 
@@ -87,7 +86,6 @@ namespace juego1._0
         {
             if (sonido)
                 soundInicio();
-            jugando = true;
             pnlBase.Enabled = true;
             btnNuevo.Enabled = true;
             btnInicio.Enabled = false;
@@ -110,7 +108,6 @@ namespace juego1._0
                 btnNuevo.Enabled = false;
                 tsmiDif.Enabled = true;
                 pnlBase.Enabled = false;
-                jugando = false;
                 dibujarCuadricula();
             }
         }
@@ -174,7 +171,6 @@ namespace juego1._0
             if (entrarClick)
             {
                 entrarClick = false;
-
 
                 defObjetivo(p);
                 //si estoy clickeando una ficha mia
@@ -907,25 +903,63 @@ namespace juego1._0
             if (fichasPlayer.Count > 0)
             {
                 clsFicha fichaPC = fichasPc[r.Next(0, fichasPc.Count)];//randomeo una fichaPC
-                clsFicha cercana=new clsFicha();
                 double distancia = pnlBase.Width;
-                foreach (clsFicha f in fichasPlayer)//establezco la fichaPlayer mas cercana a la fichaPC randomeada
+
+                List<auxMov> distancias = new List<auxMov>();
+
+
+
+                foreach (clsFicha fpc in fichasPc)
                 {
-                    if (IADistancia(fichaPC.Ubicacion,f.Ubicacion)<distancia)
+                    clsFicha cercana = new clsFicha();
+
+                    foreach (clsFicha f in fichasPlayer)//establezco la fichaPlayer mas cercana a la fichaPC randomeada
                     {
-                        cercana = f;
-                    }
-                }
-                if(!IAPosSupIzqPc(fichaPC, cercana))
-                {
-                    if (!IAPosSupDerPc(fichaPC, cercana))
-                    {
-                        if (!IAPosInfIzqPc(fichaPC, cercana))
+                        if (IADistancia(fpc.Ubicacion, f.Ubicacion) < distancia)
                         {
-                            IAPosInfDerPc(fichaPC, cercana);
+                            cercana = f;
+                        }
+                    }
+                    distancias.Add(new auxMov(fpc, cercana, IADistancia(fpc.Ubicacion, cercana.Ubicacion)));
+                    
+                }
+                distancia = pnlBase.Width;
+                auxMov am = new auxMov();
+
+                foreach (auxMov a in distancias)
+                {
+                    if (a.Distancia < distancia)
+                        am = a;
+                }
+
+                if (!IAPosSupIzqPc(am.Pc, am.Pl))
+                {
+                    if (!IAPosSupDerPc(am.Pc, am.Pl))
+                    {
+                        if (!IAPosInfIzqPc(am.Pc, am.Pl))
+                        {
+                            IAPosInfDerPc(am.Pc, am.Pl);
                         }
                     }
                 }
+
+                //foreach (clsFicha f in fichasPlayer)//establezco la fichaPlayer mas cercana a la fichaPC randomeada
+                //{
+                //    if (IADistancia(fichaPC.Ubicacion,f.Ubicacion)<distancia)
+                //    {
+                //        cercana = f;
+                //    }
+                //}
+                //if(!IAPosSupIzqPc(fichaPC, cercana))
+                //{
+                //    if (!IAPosSupDerPc(fichaPC, cercana))
+                //    {
+                //        if (!IAPosInfIzqPc(fichaPC, cercana))
+                //        {
+                //            IAPosInfDerPc(fichaPC, cercana);
+                //        }
+                //    }
+                //}
             }
         }
 
